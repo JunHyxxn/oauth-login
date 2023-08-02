@@ -1,0 +1,26 @@
+server:
+  port: 8080
+
+--- # local & dev
+spring:
+  config:
+    activate:
+      on-profile: global-dev
+  devtools:
+    livereload:
+      enabled: true
+
+logging:
+  level:
+    com: debug
+    org.hibernate.type: off
+
+--- # prod
+spring:
+  config:
+    activate:
+      on-profile: global-prod
+
+logging:
+  level:
+    com: info
