@@ -10,6 +10,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
@@ -27,7 +28,10 @@ import org.hibernate.annotations.DynamicInsert;
         name = "users",
         uniqueConstraints = {@UniqueConstraint (
                 columnNames = {"email", "provider"}
-        )}
+        )},
+        indexes = {
+                @Index(name = "email_provider_idx", columnList = "email, provider")
+        }
 )
 @DynamicInsert // table default value 적용되도록 설정
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
