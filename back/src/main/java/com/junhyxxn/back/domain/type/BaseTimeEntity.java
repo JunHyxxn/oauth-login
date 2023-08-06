@@ -5,7 +5,6 @@ import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -15,9 +14,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class BaseDateTime {
+public class BaseTimeEntity {
 
     @CreatedDate
     @Column(name = "created_date_time", columnDefinition = "DATETIME", updatable = false)
