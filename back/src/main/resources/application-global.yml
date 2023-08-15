@@ -12,8 +12,10 @@ spring:
 
 logging:
   level:
-    com: debug
     org.hibernate.type: off
+    com.zaxxer.hikari.HikariConfig: INFO
+    com.zaxxer.hikari: INFO
+    com: debug
 
 --- # prod
 spring:
