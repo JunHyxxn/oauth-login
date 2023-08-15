@@ -1,6 +1,8 @@
 server:
   port: 8080
-
+app:
+  token-header-name: Authorization
+  token-cookie-name: RTK
 --- # local & dev
 spring:
   config:
