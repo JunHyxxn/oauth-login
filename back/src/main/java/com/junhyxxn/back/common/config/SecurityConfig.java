@@ -1,5 +1,9 @@
 package com.junhyxxn.back.common.config;
 
+import com.junhyxxn.back.common.filter.JwtAuthenticationFilter;
+import com.junhyxxn.back.common.handler.JwtAuthenticationEntryPoint;
+import com.junhyxxn.back.common.util.JwtUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,7 +12,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
@@ -17,8 +24,12 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@RequiredArgsConstructor
 public class SecurityConfig {
 
+    private final JwtUtil jwtUtil;
+    private final AuthenticationEntryPoint authenticationEntryPoint;
+    private final AccessDeniedHandler accessDeniedHandler;
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
@@ -29,6 +40,9 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        // add Filter
+        http.addFilterBefore(new JwtAuthenticationFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+
         http
                 // Spring Security - CORS
                 .cors(cors ->
@@ -44,6 +58,12 @@ public class SecurityConfig {
                 // SessionManagement Policy - Stateless
                 .sessionManagement(session ->
                                            session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+
+                // Exception Handler
+                .exceptionHandling(handler ->
+                                           handler.authenticationEntryPoint(authenticationEntryPoint)
+                                                   .accessDeniedHandler(accessDeniedHandler))
+
                 // request url pattern에 따른 SecurityFilterChain 동작 여부
                 .authorizeRequests(request ->
                                            request
