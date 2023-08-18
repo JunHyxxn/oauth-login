@@ -3,7 +3,6 @@ package com.junhyxxn.back.auth.service;
 import com.junhyxxn.back.common.util.JwtUtil;
 import com.junhyxxn.back.domain.type.RedisKey;
 import com.junhyxxn.back.user.service.dto.JwtResponseDto;
-import java.time.Duration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -32,7 +31,7 @@ public class TokenServiceImpl implements TokenService {
 
         // Redis에 RTK 저장
         ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
-        valueOperations.set(RedisKey.REFRESH_TOKEN.getKey(principalDetails.getName()), refreshToken, Duration.ofDays(21));
+        valueOperations.set(RedisKey.REFRESH_TOKEN.getKey(principalDetails.getName()), refreshToken, jwtUtil.getRefreshTokenExpirationTime());
 
         return JwtResponseDto.builder()
                              .accessToken(accessToken)

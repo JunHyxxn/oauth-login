@@ -127,6 +127,13 @@ public class JwtUtil {
     }
 
     /**
+     * 만료시간 조회 메서드
+     * */
+    public long getRefreshTokenExpirationTime() {
+        return REFRESH_TOKEN_EXPIRATION_TIME;
+    }
+
+    /**
      * 토큰 생성 메서드
      *
      * @param principalDetails : 현재 접근중인 주체
