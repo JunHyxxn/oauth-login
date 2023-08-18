@@ -48,7 +48,8 @@ public class User extends BaseTimeEntity {
         @NotNull
         @Enumerated(EnumType.STRING)
         @ColumnDefault("'ROLE_USER'")
-        private Role role;
+        @Builder.Default
+        private Role role = Role.ROLE_USER;
 
         @Enumerated(EnumType.STRING)
         private Gender gender;
@@ -59,7 +60,6 @@ public class User extends BaseTimeEntity {
         private String email;
 
         @NotNull
-        @Column(length = 30)
         private Provider provider;
 
         @NotNull
