@@ -1,5 +1,6 @@
 package com.junhyxxn.back.auth.service;
 
+import com.junhyxxn.back.domain.type.Provider;
 import java.util.Collection;
 import java.util.Map;
 import lombok.AccessLevel;
@@ -19,7 +20,7 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 
     private Long id;
     private String email;
-    private String provider;
+    private Provider provider;
     private String password;
     private Boolean isNew;
     private Collection<? extends GrantedAuthority> authorities;

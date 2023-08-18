@@ -2,6 +2,7 @@ package com.junhyxxn.back.domain.entity;
 
 import com.junhyxxn.back.domain.type.BaseTimeEntity;
 import com.junhyxxn.back.domain.type.Gender;
+import com.junhyxxn.back.domain.type.Provider;
 import com.junhyxxn.back.domain.type.Role;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -58,8 +59,8 @@ public class User extends BaseTimeEntity {
         private String email;
 
         @NotNull
-        @Column(length = 15)
-        private String provider;
+        @Column(length = 30)
+        private Provider provider;
 
         @NotNull
         private String password;
