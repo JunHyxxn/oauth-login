@@ -29,8 +29,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             // 인증 성공 시 SecurityContext에 Authentication 담아줍니다.
             SecurityContextHolder.getContext().setAuthentication(authentication);
             log.debug("Security Context 에 {} 인증 정보 저장했습니다.", authentication);
-        } else {
-            log.debug("Token 정보가 올바르지 않습니다.");
         }
 
         filterChain.doFilter(request, response);
